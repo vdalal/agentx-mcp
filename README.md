@@ -25,10 +25,10 @@ agentx-mcp npx -y your-mcp-server ...
 
 Then keep using your MCP client normally. Every tool call is screened; a blocked call comes back as coaching your agent recovers from.
 
-That is the keyless Shield. For the judge that catches what keywords miss, automatic retries, and human escalation on the largest calls, see Recover at https://agentx-core.com.
+That is the keyless Shield. For the judge that catches what keywords miss, automatic retries, and human escalation on the largest calls, see Recover at https://agentx-core.com/?utm_source=agentx-mcp&utm_medium=repo.
 
 ## What it is
 
 A thin launcher for the proxy that ships in [`agentx-security-sdk`](https://pypi.org/project/agentx-security-sdk/). Installing `agentx-mcp` gives you the `agentx-mcp` command with no `--from` needed. MIT licensed.
 
-Docs: https://agentx-core.com/docs
+Docs: https://agentx-core.com/docs?utm_source=agentx-mcp&utm_medium=repo
