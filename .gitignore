@@ -1,0 +1,16 @@
+# Python build + cache artifacts
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+*.egg
+
+# Local ledger/event DB written when the proxy runs locally — never publish
+.agentx.db
+
+# Virtual environments
+.venv/
+venv/
+env/

@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agentx-mcp"
+version = "0.1.0"
+description = "Keyless MCP security shield: wrap any MCP server so every tools/call is screened, and a blocked call comes back as coaching your agent recovers from. Launcher for agentx-security-sdk."
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+authors = [{ name = "AgentX Core Team", email = "founders@agentx-core.com" }]
+keywords = [
+    "mcp", "model-context-protocol", "ai-agents", "agent-security",
+    "llm-security", "ai-firewall", "guardrails", "tool-use", "ai-safety",
+    "prompt-injection", "autonomous-agents",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "Topic :: Security",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+# The proxy itself lives in agentx-security-sdk (imported as agentx_sdk); this
+# package is a thin launcher so `uvx agentx-mcp ...` / `pipx run agentx-mcp ...`
+# resolve with no `--from`. >=0.4.8 is the version whose keyless coaching was
+# validated end-to-end (Tier 2, 2026-07-03).
+dependencies = ["agentx-security-sdk>=0.4.8"]
+
+[project.urls]
+Homepage = "https://agentx-core.com"
+"Get Started" = "https://bit.ly/agentfirewall"
+Docs = "https://agentx-core.com/docs"
+
+[project.scripts]
+agentx-mcp = "agentx_mcp:main"
+
+[tool.setuptools]
+packages = ["agentx_mcp"]
