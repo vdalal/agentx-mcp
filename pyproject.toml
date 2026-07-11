@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "agentx-mcp"
-version = "0.1.0"
+version = "0.1.1"
 description = "Keyless MCP security shield: wrap any MCP server so every tools/call is screened, and a blocked call comes back as coaching your agent recovers from. Launcher for agentx-security-sdk."
 readme = "README.md"
 requires-python = ">=3.8"
@@ -27,9 +27,13 @@ classifiers = [
 ]
 # The proxy itself lives in agentx-security-sdk (imported as agentx_sdk); this
 # package is a thin launcher so `uvx agentx-mcp ...` / `pipx run agentx-mcp ...`
-# resolve with no `--from`. >=0.4.8 is the version whose keyless coaching was
-# validated end-to-end (Tier 2, 2026-07-03).
-dependencies = ["agentx-security-sdk>=0.4.8"]
+# resolve with no `--from`. The floor is a SECURITY floor, not just a
+# compatibility one: below 0.4.18 the keyless Local Shield fails open on a
+# malformed pulled-policy field and the blocked tool executes (fixed in #200,
+# published in 0.4.18). A floor that an already-installed vulnerable SDK
+# satisfies is a floor that never upgrades anyone, so raise this whenever a
+# keyless enforcement fix ships.
+dependencies = ["agentx-security-sdk>=0.4.18"]
 
 [project.urls]
 Homepage = "https://agentx-core.com"

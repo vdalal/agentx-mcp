@@ -14,4 +14,4 @@ inside the SDK.
 from agentx_sdk.mcp_proxy import main  # re-export the real proxy entry point
 
 __all__ = ["main"]
-__version__ = "0.1.0"
+__version__ = "0.1.1"
