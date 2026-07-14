@@ -4,7 +4,9 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "agentx-mcp"
-version = "0.1.1"
+# KEEP IN SYNC with agentx_mcp/__init__.py::__version__ (BACKLOG C12d).
+# test_version_gate.py binds the two; they used to be able to drift silently.
+version = "0.1.2"
 description = "Keyless MCP security shield: wrap any MCP server so every tools/call is screened, and a blocked call comes back as coaching your agent recovers from. Launcher for agentx-security-sdk."
 readme = "README.md"
 requires-python = ">=3.8"
@@ -33,7 +35,14 @@ classifiers = [
 # published in 0.4.18). A floor that an already-installed vulnerable SDK
 # satisfies is a floor that never upgrades anyone, so raise this whenever a
 # keyless enforcement fix ships.
-dependencies = ["agentx-security-sdk>=0.4.18"]
+#
+# RAISED TO 0.4.19 (PR #205): below 0.4.19 the shield's blanket `except Exception`
+# still swallows ANY error raised inside it, prints "bypassed", and EXECUTES the tool.
+# Guarding individual fields (0.4.18 / #200) closed two instances, not the class.
+# 0.4.19 fails CLOSED on a policy-load failure and makes every remaining fall-through
+# loud and counted. This floor is the ONLY thing that carries that fix to an MCP user,
+# so it moves with the fix or the fix reaches nobody.
+dependencies = ["agentx-security-sdk>=0.4.19"]
 
 [project.urls]
 Homepage = "https://agentx-core.com"
