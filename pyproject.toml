@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "agentx-mcp"
 # KEEP IN SYNC with agentx_mcp/__init__.py::__version__ (BACKLOG C12d).
 # test_version_gate.py binds the two; they used to be able to drift silently.
-version = "0.1.4"
+version = "0.1.5"
 description = "Keyless MCP security shield: wrap any MCP server so every tools/call is screened, and a blocked call comes back as coaching your agent recovers from. Launcher for agentx-security-sdk."
 readme = "README.md"
 requires-python = ">=3.8"
@@ -49,7 +49,7 @@ classifiers = [
 # proxy tries to SPAWN "--demo" as the wrapped server command. Same for `--review`. The
 # floor is what upgrades an MCP user, so without this the commands we are about to
 # document on /docs fail confusingly for anyone with a cached older SDK.
-dependencies = ["agentx-security-sdk>=0.4.25"]
+dependencies = ["agentx-security-sdk>=0.4.26"]
 
 [project.urls]
 Homepage = "https://agentx-core.com"
