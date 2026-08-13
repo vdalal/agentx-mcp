@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "agentx-mcp"
 # KEEP IN SYNC with agentx_mcp/__init__.py::__version__ (BACKLOG C12d).
 # test_version_gate.py binds the two; they used to be able to drift silently.
-version = "0.1.5"
+version = "0.1.6"
 description = "Keyless MCP security shield: wrap any MCP server so every tools/call is screened, and a blocked call comes back as coaching your agent recovers from. Launcher for agentx-security-sdk."
 readme = "README.md"
 requires-python = ">=3.8"
@@ -29,27 +29,40 @@ classifiers = [
 ]
 # The proxy itself lives in agentx-security-sdk (imported as agentx_sdk); this
 # package is a thin launcher so `uvx agentx-mcp ...` / `pipx run agentx-mcp ...`
-# resolve with no `--from`. The floor is a SECURITY floor, not just a
-# compatibility one: below 0.4.18 the keyless Local Shield fails open on a
-# malformed pulled-policy field and the blocked tool executes (fixed in #200,
-# published in 0.4.18). A floor that an already-installed vulnerable SDK
-# satisfies is a floor that never upgrades anyone, so raise this whenever a
-# keyless enforcement fix ships.
+# resolve with no `--from`.
 #
-# RAISED TO 0.4.19 (PR #205): below 0.4.19 the shield's blanket `except Exception`
-# still swallows ANY error raised inside it, prints "bypassed", and EXECUTES the tool.
-# Guarding individual fields (0.4.18 / #200) closed two instances, not the class.
-# 0.4.19 fails CLOSED on a policy-load failure and makes every remaining fall-through
-# loud and counted. This floor is the ONLY thing that carries that fix to an MCP user,
-# so it moves with the fix or the fix reaches nobody.
+# THE PIN BELOW IS A SECURITY CONTROL, not a compatibility hint. This comment names
+# NO version on purpose: the pin is the only authority. Three earlier revisions of
+# this text each cited whichever release was current when it was written, and each
+# went stale the next time the pin moved, twice ending up stating a different version
+# from the line directly beneath it. A comment that contradicts the code it describes
+# is worse than no comment, so if you find yourself typing a version number here,
+# that is the mistake repeating.
 #
-# RAISED TO 0.4.25 for a DIFFERENT reason, noted so nobody reads it as an enforcement
-# fix: reachability of the two new flags. `agentx-mcp` re-exports the SDK's main(), so
-# on an older SDK `uvx agentx-mcp --demo` is not recognised as a flag at all and the
-# proxy tries to SPAWN "--demo" as the wrapped server command. Same for `--review`. The
-# floor is what upgrades an MCP user, so without this the commands we are about to
-# document on /docs fail confusingly for anyone with a cached older SDK.
-dependencies = ["agentx-security-sdk>=0.4.26"]
+# Raise the pin when either is true:
+#   1. A keyless enforcement fix ships. An MCP user upgrades only when this floor
+#      forces it, so a floor an already-installed vulnerable SDK satisfies is a floor
+#      that upgrades nobody, and the fix reaches nobody.
+#   2. The launcher starts relying on newer SDK behaviour. This package re-exports the
+#      SDK's main(), so a flag the installed SDK does not recognise is not treated as
+#      a flag at all: it gets spawned as the wrapped server command and fails in a way
+#      that reads as a broken product rather than a stale install.
+#
+# Which release closed which hole belongs in git log, not here.
+#
+# 🔴 PUBLISH ORDER IS LOAD-BEARING, AND IT IS WRITTEN HERE BECAUSE HERE IS WHERE THE HAZARD IS.
+# The floor below can name a version that is not on PyPI yet -- these are two separate manual
+# uploads. If agentx-mcp goes first, every `uvx agentx-mcp` and `pip install agentx-mcp` fails
+# to resolve for new users until the SDK lands, and that is the whole keyless MCP entry path.
+#
+#     1. publish agentx-security-sdk        py scripts/check_pypi_version_free.py
+#     2. confirm it is live                 same script, must report TAKEN
+#     3. THEN publish agentx-mcp            py scripts/check_pypi_version_free.py agentx-mcp
+#     4. refresh + tag the public repo      the refresh-agentx-mcp-repo skill
+#
+# Said three times in review and once per session in chat before it was written down. Chat is
+# not a durable surface; this file is.
+dependencies = ["agentx-security-sdk>=0.4.28"]
 
 [project.urls]
 Homepage = "https://agentx-core.com"
