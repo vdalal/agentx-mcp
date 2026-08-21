@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "agentx-mcp"
 # KEEP IN SYNC with agentx_mcp/__init__.py::__version__ (BACKLOG C12d).
 # test_version_gate.py binds the two; they used to be able to drift silently.
-version = "0.1.6"
+version = "0.1.7"
 description = "Keyless MCP security shield: wrap any MCP server so every tools/call is screened, and a blocked call comes back as coaching your agent recovers from. Launcher for agentx-security-sdk."
 readme = "README.md"
 requires-python = ">=3.8"
@@ -62,7 +62,11 @@ classifiers = [
 #
 # Said three times in review and once per session in chat before it was written down. Chat is
 # not a durable surface; this file is.
-dependencies = ["agentx-security-sdk>=0.4.28"]
+# Raised 0.4.28 -> 0.4.30 with the 0.1.7 cut. `uvx agentx-mcp --audit --calls` dispatches into
+# the SDK's execute_audit, and --calls / --json do not exist before 0.4.30 -- so on a resolved
+# older SDK the MCP door's own audit screen is missing flags its help text offers. uvx normally
+# resolves the newest compatible SDK anyway; this makes that a guarantee rather than luck.
+dependencies = ["agentx-security-sdk>=0.4.30"]
 
 [project.urls]
 Homepage = "https://agentx-core.com"
