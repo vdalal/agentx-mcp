@@ -1,8 +1,10 @@
 """agentx-mcp: the keyless MCP security shield, one line in your mcp.json.
 
 Wrap any MCP server's launch command with `agentx-mcp` and every tools/call is
-screened before it runs. A dangerous call (a destructive database write, an SSRF,
-a secret read) is blocked and returned to your agent as coaching it can act on, so
+screened before it runs. Out of the box it watches: a dangerous call (a destructive
+database write, an SSRF, a secret read) is recorded and let through, and
+`agentx-mcp --audit` shows what would have been stopped. Set the posture to enforce
+and the same call is blocked and returned to your agent as coaching it can act on, so
 the agent revises and the run survives instead of executing the damage. No API key,
 no gateway, nothing leaves your machine.
 
@@ -18,4 +20,4 @@ __all__ = ["main"]
 # These two version strings were unbound: a bump to one could silently leave the other
 # behind, so the wheel's metadata and the package's own report of itself could disagree.
 # test_version_gate.py now binds them.
-__version__ = "0.1.7"
+__version__ = "0.2.0"

@@ -2,7 +2,7 @@
 
 Wrap any MCP server so a poisoned tool call cannot wreck your system, and your agent keeps working.
 
-`agentx-mcp` sits in front of any MCP server's stdio and screens every `tools/call` before it runs. When a call is dangerous (a destructive database write, an SSRF, a secret read), it is blocked and handed back to your agent as coaching it can act on, so the agent revises and the run finishes instead of executing the damage. No API key, no gateway, nothing leaves your machine.
+`agentx-mcp` sits in front of any MCP server's stdio and screens every `tools/call` before it runs. Out of the box it watches: a dangerous call (a destructive database write, an SSRF, a secret read) is recorded and let through, so wrapping a server that works cannot break it, and `agentx-mcp --audit` shows what would have been stopped. Set the posture to enforce and the same call is blocked and handed back to your agent as coaching it can act on, so the agent revises and the run finishes instead of executing the damage. No API key, no gateway, nothing leaves your machine.
 
 ## Use it
 
@@ -23,9 +23,15 @@ pipx install agentx-mcp        # or: pip install agentx-mcp
 agentx-mcp npx -y your-mcp-server ...
 ```
 
-Then keep using your MCP client normally. Every tool call is screened; a blocked call comes back as coaching your agent recovers from.
+Then keep using your MCP client normally. Every tool call is screened and recorded. To block rather than watch, add one more line to that server's entry:
 
-That is the keyless Shield. For the judge that catches what keywords miss, automatic retries, and human escalation on the largest calls, see Recover at https://agentx-core.com/?utm_source=agentx-mcp&utm_medium=repo.
+```jsonc
+"env": { "AGENTX_POSTURE": "enforce" }
+```
+
+A blocked call comes back as coaching your agent recovers from.
+
+That is the keyless floor. For the judge that catches what keywords miss, automatic retries, and human escalation on the largest calls, see Recover at https://agentx-core.com/?utm_source=agentx-mcp&utm_medium=repo.
 
 ## What it is
 
