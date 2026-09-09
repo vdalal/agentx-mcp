@@ -1,6 +1,6 @@
 # agentx-mcp
 
-Wrap any MCP server so a poisoned tool call cannot wreck your system, and your agent keeps working.
+Wrap any MCP server so every tool call is screened and recorded before it runs, and set the posture to enforce when you want the dangerous ones stopped.
 
 `agentx-mcp` sits in front of any MCP server's stdio and screens every `tools/call` before it runs. Out of the box it watches: a dangerous call (a destructive database write, an SSRF, a secret read) is recorded and let through, so wrapping a server that works cannot break it, and `agentx-mcp --audit` shows what would have been stopped. Set the posture to enforce and the same call is blocked and handed back to your agent as coaching it can act on, so the agent revises and the run finishes instead of executing the damage. No API key, no gateway, nothing leaves your machine.
 
