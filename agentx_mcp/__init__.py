@@ -20,4 +20,4 @@ __all__ = ["main"]
 # These two version strings were unbound: a bump to one could silently leave the other
 # behind, so the wheel's metadata and the package's own report of itself could disagree.
 # test_version_gate.py now binds them.
-__version__ = "0.2.0"
+__version__ = "0.2.1"
