@@ -9,7 +9,7 @@ name = "agentx-mcp"
 # 0.2.0, not 0.1.8: the pin below pulls an SDK whose keyless default flipped from blocking to
 # watching, and this version is the only one an `uvx agentx-mcp` user ever sees. Same reason
 # the SDK went 0.4.31 -> 0.5.0 rather than 0.4.32.
-version = "0.2.1"
+version = "0.2.2"
 description = "Keyless MCP security shield: wrap any MCP server so every tools/call is screened and recorded; set the posture to enforce and a blocked call comes back as coaching your agent recovers from. Launcher for agentx-security-sdk."
 readme = "README.md"
 requires-python = ">=3.8"
@@ -66,7 +66,7 @@ classifiers = [
 # Said three times in review and once per session in chat before it was written down. Chat is
 # not a durable surface; this file is. Why each raise happened is in `git log -p` on the line
 # below, which is where the rule above says it belongs.
-dependencies = ["agentx-security-sdk>=0.5.1"]
+dependencies = ["agentx-security-sdk>=0.5.2"]
 
 [project.urls]
 Homepage = "https://agentx-core.com"
