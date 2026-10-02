@@ -16,6 +16,16 @@ No install needed with `uvx`:
 }
 ```
 
+Claude Code writes that entry for you instead:
+
+```bash
+claude mcp add your-server -- uvx agentx-mcp npx -y your-mcp-server ...
+```
+
+Either way the shape is the same: our proxy first, your server after it. The `env` settings below
+apply to Claude Code too: add the server with `claude mcp add -s project` and it writes a
+`.mcp.json` you can edit the same way.
+
 Or install it persistently:
 
 ```bash
