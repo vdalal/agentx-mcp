@@ -2,7 +2,7 @@
 
 Wrap any MCP server so every tool call is screened and recorded before it runs, and set the posture to enforce when you want the dangerous ones stopped.
 
-`agentx-mcp` sits in front of any MCP server's stdio and screens every `tools/call` before it runs. Out of the box it watches: a dangerous call (a destructive database write, an SSRF, a secret read) is recorded and let through, so wrapping a server that works cannot break it, and `agentx-mcp --audit` shows what would have been stopped. Set the posture to enforce and the same call is blocked and handed back to your agent as coaching it can act on, so the agent revises and the run finishes instead of executing the damage. No API key, no gateway, nothing leaves your machine.
+`agentx-mcp` sits in front of any MCP server's stdio and screens every `tools/call` before it runs. Out of the box it watches: a dangerous call (a destructive database write, an SSRF, a secret read) is recorded and let through, so wrapping a server that works cannot break it, and `agentx-mcp --audit` shows what would have been stopped. Set the posture to enforce and the same call is blocked and handed back to your agent as coaching it can act on, so the agent revises and the run finishes instead of executing the damage. No API key, no gateway, and your calls never leave your machine (an anonymous daily usage count is sent; `AGENTX_TELEMETRY=off` stops it).
 
 ## Use it
 
@@ -50,6 +50,8 @@ To block rather than watch, add one more line to that server's entry:
 ```
 
 A blocked call comes back as coaching your agent recovers from.
+
+The proxy also fingerprints each tool the server advertises, and warns when an approved tool's description or schema changes later (a bait-and-switch). Add `"AGENTX_MCP_TOOL_PINNING": "block"` to the same `env` block and calls to a changed tool are blocked on every run until you have checked the change and run `uvx agentx-mcp --approve-changes`. Block mode also holds a tool whose description, the first time it is listed, looks like it hides instructions for your agent. `uvx agentx-mcp --audit` lists what your servers changed and which tools are held, apart from the calls your agent made.
 
 To keep the records per project rather than per user, and to have the proxy match the rules you adopted in that project's `.agentx/rules.json`, name the project in the same env block. The proxy prints where its stores are and how it decided at every start:
 
